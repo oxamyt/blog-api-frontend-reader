@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CreateComment from "./CommentsForm";
 
 function SinglePost() {
   const { id } = useParams();
@@ -21,7 +22,6 @@ function SinglePost() {
       }
 
       const data = await response.json();
-
       setPost(data);
       setError(null);
     } catch (error) {
@@ -43,6 +43,25 @@ function SinglePost() {
         <div>
           <h2>{post.title}</h2>
           <p>{post.content}</p>
+
+          <h3>Comments</h3>
+          {post.comments && post.comments.length > 0 ? (
+            <ul>
+              {post.comments.map((comment) => (
+                <li key={comment.id}>
+                  <p>{comment.content}</p>
+                  <p>By: {comment.author.username}</p>
+                  <p>
+                    Created at: {new Date(comment.createdAt).toLocaleString()}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No comments yet.</p>
+          )}
+
+          <CreateComment />
         </div>
       )}
     </>
