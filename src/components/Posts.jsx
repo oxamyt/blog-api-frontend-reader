@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 function Posts() {
   const [responseData, setResponseData] = useState(null);
+  const [error, setError] = useState(null);
 
   const fetchPosts = async () => {
     const token = localStorage.getItem("token");
@@ -15,7 +16,7 @@ function Posts() {
     console.log(response);
 
     if (!response.ok) {
-      throw new Error("Failed to login. Please try again.");
+      setError("You are not Authorized");
     }
     const data = await response.json();
     setResponseData(data);
@@ -27,6 +28,7 @@ function Posts() {
 
   return (
     <>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       {responseData && (
         <div>
           <h2>Response Data:</h2>
