@@ -4,6 +4,7 @@ import Homepage from "./components/Homepage.jsx";
 import LoginPage from "./components/LoginPage.jsx";
 import RegisterPage from "./components/RegisterPage.jsx";
 import Posts from "./components/Posts.jsx";
+import SinglePost from "./components/SinglePost.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
       { path: "posts", element: <Posts /> },
+      { path: "posts/:id", element: <SinglePost /> },
     ],
   },
 ]);
