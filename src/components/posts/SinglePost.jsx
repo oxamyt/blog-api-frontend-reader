@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CreateComment from "./CommentsForm";
+import CreateComment from "../common/CommentsForm";
 
 function SinglePost() {
   const { id } = useParams();

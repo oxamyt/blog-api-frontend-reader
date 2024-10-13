@@ -1,4 +1,7 @@
 import { useState } from "react";
+import FormInput from "../common/FormInput";
+import ErrorMessage from "../common/ErrorMessage";
+import { postRequest } from "../../utils/api";
 
 function RegisterPage() {
   const [responseData, setResponseData] = useState(null);
@@ -18,21 +21,11 @@ function RegisterPage() {
     const data = { username, password, confirmPassword };
 
     try {
-      const response = await fetch("http://localhost:3000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const responseData = await postRequest(
+        "http://localhost:3000/auth/register",
+        data
+      );
 
-      console.log(response);
-
-      if (!response.ok) {
-        throw new Error("Failed to register. Please try again.");
-      }
-
-      const responseData = await response.json();
       setResponseData(responseData);
       setError(null);
       setUsername("");
@@ -46,33 +39,30 @@ function RegisterPage() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
+        <FormInput
+          label="Username"
           type="text"
-          id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
+          id="username"
         />
-        <label htmlFor="password">Password:</label>
-        <input
+        <FormInput
+          label="Password"
           type="password"
-          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
+          id="password"
         />
-        <label htmlFor="confirmPassword">Confirm password:</label>
-        <input
+        <FormInput
+          label="Confirm Password"
           type="password"
-          id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          required
+          id="confirmPassword"
         />
         <button type="submit">Submit</button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <ErrorMessage message={error} />
       {responseData && (
         <div>
           <h2>Response Data:</h2>
