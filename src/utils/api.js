@@ -15,6 +15,19 @@ export async function getPostsRequest(url, token) {
       Authorization: `Bearer ${token}`,
     },
   });
-  if (!response.ok) throw new Error("Failed to submit form");
+  if (!response.ok) throw new Error("Failed to fetch posts");
+  return await response.json();
+}
+
+export async function getSinglePostRequest(id, token) {
+  const response = await fetch(`http://localhost:3000/posts/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  console.log(response);
+
   return await response.json();
 }

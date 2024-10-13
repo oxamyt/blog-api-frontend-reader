@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CreateComment from "../common/CommentsForm";
+import { getSinglePostRequest } from "../../utils/api";
+import ErrorMessage from "../common/ErrorMessage";
 
 function SinglePost() {
   const { id } = useParams();
@@ -10,22 +12,15 @@ function SinglePost() {
 
   const fetchSinglePost = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/posts/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const token = localStorage.getItem("token");
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch post");
-      }
+      const responseData = await getSinglePostRequest(id, token);
 
-      const data = await response.json();
-      setPost(data);
+      setPost(responseData);
       setError(null);
     } catch (error) {
       setError(error.message);
+      setPost(null);
     } finally {
       setLoading(false);
     }
@@ -35,35 +30,43 @@ function SinglePost() {
     fetchSinglePost();
   }, [id]);
 
+  const renderPost = () => {
+    if (!post) {
+      return <p>Post not found.</p>;
+    }
+
+    return (
+      <div key={post.id}>
+        <h2>{post.title}</h2>
+        <p>{post.content}</p>
+
+        <h3>Comments</h3>
+        {post.comments && post.comments.length > 0 ? (
+          <ul>
+            {post.comments.map((comment) => (
+              <li key={comment.id}>
+                <p>{comment.content}</p>
+                <p>By: {comment.author.username}</p>
+                <p>
+                  Created at: {new Date(comment.createdAt).toLocaleString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No comments yet.</p>
+        )}
+
+        <CreateComment />
+      </div>
+    );
+  };
+
   return (
     <>
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {post && (
-        <div>
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-
-          <h3>Comments</h3>
-          {post.comments && post.comments.length > 0 ? (
-            <ul>
-              {post.comments.map((comment) => (
-                <li key={comment.id}>
-                  <p>{comment.content}</p>
-                  <p>By: {comment.author.username}</p>
-                  <p>
-                    Created at: {new Date(comment.createdAt).toLocaleString()}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No comments yet.</p>
-          )}
-
-          <CreateComment />
-        </div>
-      )}
+      {error && <ErrorMessage message={error} />}
+      {renderPost()}
     </>
   );
 }
