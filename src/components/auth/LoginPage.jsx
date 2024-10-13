@@ -1,4 +1,7 @@
 import { useState } from "react";
+import ErrorMessage from "../common/ErrorMessage";
+import FormInput from "../common/FormInput";
+import { postRequest } from "../../utils/api";
 
 function LoginPage() {
   const [responseData, setResponseData] = useState(null);
@@ -10,23 +13,14 @@ function LoginPage() {
     event.preventDefault();
 
     const data = { username, password };
+    ("http://localhost:3000/auth/login");
 
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const responseData = await postRequest(
+        "http://localhost:3000/auth/login",
+        data
+      );
 
-      console.log(response);
-
-      if (!response.ok) {
-        throw new Error("Failed to login. Please try again.");
-      }
-
-      const responseData = await response.json();
       setResponseData(responseData);
       setError(null);
       setUsername("");
@@ -40,25 +34,23 @@ function LoginPage() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
+        <FormInput
+          label="Username"
           type="text"
-          id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
+          id="username"
         />
-        <label htmlFor="password">Password:</label>
-        <input
+        <FormInput
+          label="Password"
           type="password"
-          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
+          id="password"
         />
         <button type="submit">Submit</button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <ErrorMessage message={error} />
       {responseData && (
         <div>
           <h2>Response Data:</h2>

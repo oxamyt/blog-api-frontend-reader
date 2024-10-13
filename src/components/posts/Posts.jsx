@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { getPostsRequest } from "../../utils/api";
+import ErrorMessage from "../common/ErrorMessage";
 
 function Posts() {
-  const [responseData, setResponseData] = useState(null);
+  const [responseData, setResponseData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -9,21 +11,12 @@ function Posts() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:3000/posts", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const responseData = await getPostsRequest(
+        "http://localhost:3000/posts/",
+        token
+      );
 
-      console.log(response);
-
-      if (!response.ok) {
-        throw new Error("You are not authorized or failed to fetch posts");
-      }
-
-      const data = await response.json();
-      setResponseData(data);
+      setResponseData(responseData);
       setError(null);
     } catch (error) {
       setError(error.message);
@@ -36,16 +29,23 @@ function Posts() {
     fetchPosts();
   }, []);
 
+  const renderPosts = () => {
+    if (responseData.length === 0) {
+      return;
+    }
+
+    return responseData.map((post) => (
+      <div key={post.id}>
+        <h2>{post.title}</h2>
+        <p>{post.content}</p>
+      </div>
+    ));
+  };
+
   return (
     <>
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {responseData && (
-        <div>
-          <h2>Response Data:</h2>
-          <pre>{JSON.stringify(responseData, null, 2)}</pre>
-        </div>
-      )}
+      {loading ? <p>Loading...</p> : <ErrorMessage message={error} />}
+      {renderPosts()}
     </>
   );
 }

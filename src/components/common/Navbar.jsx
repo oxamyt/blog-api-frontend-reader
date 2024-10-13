@@ -1,42 +1,43 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
 
 function Navbar() {
-  const [responseData, setResponseData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (!confirmLogout) return;
+
+    setLoading(true);
+    setError(null);
     try {
       const response = await fetch("http://localhost:3000/auth/logout", {
         method: "POST",
       });
 
-      console.log(response);
-
       if (!response.ok) {
         throw new Error("Failed to logout. Please try again.");
       }
 
-      const data = await response.json();
-      setResponseData(data);
       localStorage.removeItem("token");
+      navigate("/login");
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <button type="button" onClick={handleLogout}>
-        Logout
+      <button type="button" onClick={handleLogout} disabled={loading}>
+        {loading ? "Logging out..." : "Logout"}
       </button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {responseData && (
-        <div>
-          <h2>Response Data:</h2>
-          <pre>{JSON.stringify(responseData, null, 2)}</pre>
-        </div>
-      )}
+      <ErrorMessage message={error} />
     </>
   );
 }
