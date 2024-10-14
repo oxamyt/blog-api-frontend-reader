@@ -1,7 +1,10 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
+import FormInput from "./FormInput";
+import { postRequestComment } from "../../utils/api";
 
-function CreateComment() {
+function CreateComment({ onCommentAdded }) {
   const [content, setContent] = useState("");
   const [error, setError] = useState(null);
   const { id } = useParams();
@@ -13,27 +16,14 @@ function CreateComment() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/posts/${id}/comments`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to create comment. Please try again.");
-      }
-
-      const responseData = await response.json();
+      const responseData = await postRequestComment(id, token, data);
       setError(null);
       setContent("");
 
       console.log("Comment created successfully:", responseData);
+      if (onCommentAdded) {
+        onCommentAdded();
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -43,18 +33,21 @@ function CreateComment() {
     <>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="content">Comment:</label>
-        <input
+        <FormInput
+          label="Comment"
           type="text"
-          id="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          required
+          id="content"
         />
         <button type="submit">Submit</button>
       </form>
     </>
   );
 }
+
+CreateComment.propTypes = {
+  onCommentAdded: PropTypes.func.isRequired,
+};
 
 export default CreateComment;

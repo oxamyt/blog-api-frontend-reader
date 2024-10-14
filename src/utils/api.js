@@ -27,7 +27,20 @@ export async function getSinglePostRequest(id, token) {
     },
   });
 
-  console.log(response);
+  return await response.json();
+}
 
+export async function postRequestComment(id, token, data) {
+  const response = await fetch(`http://localhost:3000/posts/${id}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to create comment. Please try again.");
+  }
   return await response.json();
 }

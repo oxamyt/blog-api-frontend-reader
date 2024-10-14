@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CreateComment from "../common/CommentsForm";
+import CreateComment from "../common/CreateComment";
 import { getSinglePostRequest } from "../../utils/api";
 import ErrorMessage from "../common/ErrorMessage";
 
@@ -30,6 +30,10 @@ function SinglePost() {
     fetchSinglePost();
   }, [id]);
 
+  const handleCommentAdded = () => {
+    fetchSinglePost();
+  };
+
   const renderPost = () => {
     if (!post) {
       return <p>Post not found.</p>;
@@ -57,7 +61,7 @@ function SinglePost() {
           <p>No comments yet.</p>
         )}
 
-        <CreateComment />
+        <CreateComment onCommentAdded={handleCommentAdded} />
       </div>
     );
   };
