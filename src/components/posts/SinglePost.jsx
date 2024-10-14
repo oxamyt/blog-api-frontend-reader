@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import CreateComment from "../common/CreateComment";
 import { getSinglePostRequest } from "../../utils/api";
 import ErrorMessage from "../common/ErrorMessage";
+import DeleteComment from "../common/DeleteComment";
 
 function SinglePost() {
   const { id } = useParams();
@@ -54,6 +55,11 @@ function SinglePost() {
                 <p>
                   Created at: {new Date(comment.createdAt).toLocaleString()}
                 </p>
+                <DeleteComment
+                  id={id}
+                  commentId={comment.id}
+                  onCommentDeleted={fetchSinglePost}
+                />
               </li>
             ))}
           </ul>
