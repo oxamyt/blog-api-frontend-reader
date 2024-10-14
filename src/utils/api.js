@@ -45,9 +45,9 @@ export async function postRequestComment(id, token, data) {
   return await response.json();
 }
 
-export async function deleteRequestComment(postId, commentId, token) {
+export async function deleteRequestComment(id, commentId, token) {
   const response = await fetch(
-    `http://localhost:3000/posts/${postId}/comments/${commentId}`,
+    `http://localhost:3000/posts/${id}/comments/${commentId}`,
     {
       method: "DELETE",
       headers: {
@@ -64,6 +64,28 @@ export async function deleteRequestComment(postId, commentId, token) {
 
   if (response.status === 204) {
     return { success: true };
+  }
+
+  return await response.json();
+}
+
+export async function putRequestComment(id, commentId, data, token) {
+  const response = await fetch(
+    `http://localhost:3000/posts/${id}/comments/${commentId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(
+      errorMessage || "Failed to edit comment. Please try again."
+    );
   }
 
   return await response.json();
