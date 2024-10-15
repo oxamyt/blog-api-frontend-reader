@@ -36,8 +36,8 @@ function Posts() {
 
     return responseData.map((post) => (
       <div key={post.id}>
-        <h2>{post.title}</h2>
-        <p>{post.content}</p>
+        <h2>Post title:{post.title}</h2>
+        <p>Post content:{post.content}</p>
       </div>
     ));
   };

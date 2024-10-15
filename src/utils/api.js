@@ -8,6 +8,15 @@ export async function postRequest(url, data) {
   return await response.json();
 }
 
+export async function postRequestLogout() {
+  const response = await fetch("http://localhost:3000/auth/logout", {
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to logout. Please try again.");
+  }
+}
+
 export async function getPostsRequest(url, token) {
   const response = await fetch(url, {
     method: "GET",

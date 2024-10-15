@@ -13,7 +13,6 @@ function LoginPage() {
     event.preventDefault();
 
     const data = { username, password };
-    ("http://localhost:3000/auth/login");
 
     try {
       const responseData = await postRequest(
