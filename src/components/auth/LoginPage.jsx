@@ -16,12 +16,16 @@ function LoginPage() {
     const data = { username, password };
 
     try {
-      await postRequest("http://localhost:3000/auth/login", data);
+      const responseData = await postRequest(
+        "http://localhost:3000/auth/login",
+        data
+      );
 
       setError(null);
 
       setUsername("");
       setPassword("");
+      localStorage.setItem("token", responseData.token);
       navigate("/");
     } catch (error) {
       setError(error.message);

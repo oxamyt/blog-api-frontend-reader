@@ -37,7 +37,7 @@ export async function getPostsRequest(url, token) {
       Authorization: `Bearer ${token}`,
     },
   });
-  if (!response.ok) throw new Error("Failed to fetch posts");
+  if (!response.ok) throw new Error("Please Login First");
   return await response.json();
 }
 

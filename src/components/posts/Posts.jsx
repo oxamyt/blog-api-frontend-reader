@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { getPostsRequest } from "../../utils/api";
 import ErrorMessage from "../common/ErrorMessage";
 
@@ -30,23 +31,35 @@ function Posts() {
   }, []);
 
   const renderPosts = () => {
-    if (responseData.length === 0) {
-      return;
+    if (responseData.length === 0 && error === null) {
+      return <p className="text-gray-600">No posts available.</p>;
     }
 
     return responseData.map((post) => (
-      <div key={post.id}>
-        <h2>Post title:{post.title}</h2>
-        <p>Post content:{post.content}</p>
-      </div>
+      <Link
+        key={post.id}
+        to={`/posts/${post.id}`}
+        className="block bg-white shadow-lg rounded-lg p-6 mb-4 transition-transform transform hover:scale-105"
+      >
+        <h1 className="text-gray-600 font-bold text-4xl mb-4">
+          {post.content}
+        </h1>
+        <span className="text-l text-gray-500">Read More inside →</span>
+      </Link>
     ));
   };
 
   return (
-    <>
-      {loading ? <p>Loading...</p> : <ErrorMessage message={error} />}
-      {renderPosts()}
-    </>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
+      {loading ? (
+        <p className="text-gray-600">Loading...</p>
+      ) : (
+        <>
+          <ErrorMessage message={error} />
+          <div className="w-full max-w-2xl">{renderPosts()}</div>
+        </>
+      )}
+    </div>
   );
 }
 

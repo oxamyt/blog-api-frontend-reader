@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Homepage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
@@ -9,6 +11,9 @@ function Homepage() {
           Discover the cutest kittens, heartwarming stories, and everything
           about our feline friends!
         </p>
+        <button className="bg-stone-900 text-white font-bold p-2 rounded-xl mt-2">
+          <Link to={"http://localhost:5173/posts"}>Dive into Blogs!</Link>
+        </button>
       </div>
     </div>
   );
