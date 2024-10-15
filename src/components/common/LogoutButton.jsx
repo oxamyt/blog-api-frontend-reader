@@ -16,7 +16,7 @@ function LogoutButton() {
       }
 
       localStorage.removeItem("token");
-      navigate("/login");
+      navigate("/auth/login");
     } catch (error) {
       setError(error.message);
     }

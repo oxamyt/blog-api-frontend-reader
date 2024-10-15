@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../common/FormInput";
 import ErrorMessage from "../common/ErrorMessage";
 import { postRequest } from "../../utils/api";
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,16 +16,13 @@ function LoginPage() {
     const data = { username, password };
 
     try {
-      const responseData = await postRequest(
-        "http://localhost:3000/auth/login",
-        data
-      );
+      await postRequest("http://localhost:3000/auth/login", data);
 
-      // Handle successful login (e.g., redirect or set user state)
       setError(null);
-      // Reset form
+
       setUsername("");
       setPassword("");
+      navigate("/");
     } catch (error) {
       setError(error.message);
     }

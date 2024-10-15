@@ -81,7 +81,7 @@ function RegisterPage() {
 
       {responseData && error === null && (
         <section className="mt-4 p-4 bg-stone-900 text-green-800 rounded-lg">
-          <h2 className="text-lg text-white font-semibold">
+          <h2 className="text-lg text-center text-white font-semibold">
             User Registered Successfully
           </h2>
           <p className="mt-4">
