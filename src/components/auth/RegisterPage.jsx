@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import FormInput from "../common/FormInput";
 import ErrorMessage from "../common/ErrorMessage";
 import { postRequest } from "../../utils/api";
@@ -72,18 +73,26 @@ function RegisterPage() {
         />
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300"
+          className="w-full bg-stone-900 font-bold text-white py-2 rounded-lg transition duration-300"
         >
           Submit
         </button>
       </form>
 
       {responseData && error === null && (
-        <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-lg">
-          <h2 className="text-lg font-semibold">
+        <section className="mt-4 p-4 bg-stone-900 text-green-800 rounded-lg">
+          <h2 className="text-lg text-white font-semibold">
             User Registered Successfully
           </h2>
-        </div>
+          <p className="mt-4">
+            <Link
+              to="/auth/login"
+              className="inline-block w-full rounded-lg bg-stone-100  font-bold text-black text-center py-2  transition duration-300"
+            >
+              Go to Login
+            </Link>
+          </p>
+        </section>
       )}
     </div>
   );

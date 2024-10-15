@@ -1,15 +1,15 @@
 import { useState } from "react";
-import ErrorMessage from "../common/ErrorMessage";
+import { Link } from "react-router-dom";
 import FormInput from "../common/FormInput";
+import ErrorMessage from "../common/ErrorMessage";
 import { postRequest } from "../../utils/api";
 
 function LoginPage() {
-  const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = { username, password };
@@ -20,25 +20,33 @@ function LoginPage() {
         data
       );
 
-      setResponseData(responseData);
+      // Handle successful login (e.g., redirect or set user state)
       setError(null);
+      // Reset form
       setUsername("");
       setPassword("");
-
-      localStorage.setItem("token", responseData.token);
     } catch (error) {
       setError(error.message);
     }
   };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md"
+      >
+        <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+          Login
+        </h1>
+        {error && <ErrorMessage message={error} />}
         <FormInput
           label="Username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           id="username"
+          className="mb-4"
         />
         <FormInput
           label="Password"
@@ -46,16 +54,24 @@ function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           id="password"
+          className="mb-4"
         />
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className="w-full bg-stone-900 font-bold text-white py-2 rounded-lg transition duration-300"
+        >
+          Login
+        </button>
       </form>
-      <ErrorMessage message={error} />
-      {responseData && (
-        <div>
-          <h2>Response Data:</h2>
-          <pre>{JSON.stringify(responseData, null, 2)}</pre>
-        </div>
-      )}
+
+      <p className="mt-4 text-center">
+        <Link
+          to="/auth/register"
+          className="text-stone-900 no-underline font-bold"
+        >
+          Don't have an account? Register here.
+        </Link>
+      </p>
     </div>
   );
 }
