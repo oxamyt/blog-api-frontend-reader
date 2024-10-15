@@ -5,6 +5,7 @@ import LoginPage from "./components/auth/LoginPage.jsx";
 import RegisterPage from "./components/auth/RegisterPage.jsx";
 import Posts from "./components/posts/Posts.jsx";
 import SinglePost from "./components/posts/SinglePost.jsx";
+import AuthLayout from "./components/layout/AuthLayout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -12,10 +13,16 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Homepage /> },
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
       { path: "posts", element: <Posts /> },
       { path: "posts/:id", element: <SinglePost /> },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      { path: "login", element: <LoginPage /> },
+      { path: "register", element: <RegisterPage /> },
     ],
   },
 ]);

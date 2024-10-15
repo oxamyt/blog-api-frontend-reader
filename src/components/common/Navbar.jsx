@@ -10,6 +10,8 @@ function Navbar() {
     <>
       <LogoutButton setError={setError} />
       <Link to={"http://localhost:5173/posts"}>Posts</Link>
+      <Link to={"http://localhost:5173/register"}>Register</Link>
+      <Link to={"http://localhost:5173/login"}>Login</Link>
       <ErrorMessage message={error} />
     </>
   );
