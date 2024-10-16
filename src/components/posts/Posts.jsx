@@ -41,9 +41,7 @@ function Posts() {
         to={`/posts/${post.id}`}
         className="block bg-white shadow-lg rounded-lg p-6 mb-4 transition-transform transform hover:scale-105"
       >
-        <h1 className="text-gray-600 font-bold text-4xl mb-4">
-          {post.content}
-        </h1>
+        <h1 className="text-gray-600 font-bold text-4xl mb-4">{post.title}</h1>
         <span className="text-l text-gray-500">Read More Inside →</span>
       </Link>
     ));

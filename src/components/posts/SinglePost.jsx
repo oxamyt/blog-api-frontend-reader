@@ -41,7 +41,7 @@ function SinglePost() {
     return (
       <div key={post.id} className="p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-4xl text-center font-bold mb-4">{post.title}</h2>
-        <p className="text-gray-700 text-xl mb-6">{post.content}</p>
+        <p className="text-gray-700 text-center text-xl mb-6">{post.content}</p>
 
         <h3 className="text-lg font-semibold mb-2">Comments</h3>
         {post.comments && post.comments.length > 0 ? (
@@ -63,7 +63,7 @@ function SinglePost() {
                   />
                 ) : (
                   <div>
-                    <p className="text-gray-800 text-s ">{comment.content}</p>
+                    <p className="text-gray-800 text-xl ">{comment.content}</p>
                     <p className="text-s text-gray-500">
                       By:{" "}
                       <span className="font-semibold">
