@@ -39,10 +39,7 @@ function SinglePost() {
     }
 
     return (
-      <div
-        key={post.id}
-        className="md:w-6/12  p-6 bg-white rounded-lg shadow-md"
-      >
+      <div className="md:w-6/12 w-full p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-4xl text-center font-bold mb-4">{post.title}</h2>
         <p className="text-gray-700 text-center text-xl mb-6">{post.content}</p>
 
@@ -84,7 +81,7 @@ function SinglePost() {
                       <div className="mt-2 flex space-x-2">
                         <button
                           onClick={() => setEditingComment(comment.id)}
-                          className="px-4  text-white border-2 border-transparent bg-stone-900 font-bold  py-2 rounded-lg hover:bg-stone-100 hover:border-2 hover:border-black hover:text-black transition duration-300"
+                          className="px-4 text-white border-2 border-transparent bg-stone-900 font-bold py-2 rounded-lg hover:bg-stone-100 hover:border-2 hover:border-black hover:text-black transition duration-300"
                         >
                           Edit
                         </button>
@@ -110,11 +107,11 @@ function SinglePost() {
   };
 
   return (
-    <>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
       {loading && <p className="text-gray-500">Loading...</p>}
       {error && <ErrorMessage message={error} />}
       {renderPost()}
-    </>
+    </div>
   );
 }
 
