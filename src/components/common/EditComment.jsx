@@ -20,17 +20,22 @@ function EditComment({ id, commentId, initialComment, onCommentEdited }) {
   };
 
   return (
-    <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleEditComment}>
+    <div className="mt-4">
+      {error && <p className="text-red-500 mb-2">{error}</p>}
+      <form onSubmit={handleEditComment} className="flex flex-col space-y-4">
         <FormInput
-          label="Comment"
+          label="Edit your comment"
           type="text"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           id="content"
         />
-        <button type="submit">Update</button>
+        <button
+          type="submit"
+          className="self-start bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+        >
+          Update Comment
+        </button>
       </form>
     </div>
   );

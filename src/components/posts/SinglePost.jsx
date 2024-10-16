@@ -13,12 +13,12 @@ function SinglePost() {
   const [loading, setLoading] = useState(true);
   const [editingComment, setEditingComment] = useState(null);
 
+  const userId = localStorage.getItem("userId");
+
   const fetchSinglePost = async () => {
     try {
       const token = localStorage.getItem("token");
-
       const responseData = await getSinglePostRequest(id, token);
-
       setPost(responseData);
       setError(null);
     } catch (error) {
@@ -40,8 +40,8 @@ function SinglePost() {
 
     return (
       <div key={post.id} className="p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
-        <p className="text-gray-700 mb-6">{post.content}</p>
+        <h2 className="text-4xl text-center font-bold mb-4">{post.title}</h2>
+        <p className="text-gray-700 text-xl mb-6">{post.content}</p>
 
         <h3 className="text-lg font-semibold mb-2">Comments</h3>
         {post.comments && post.comments.length > 0 ? (
@@ -63,26 +63,35 @@ function SinglePost() {
                   />
                 ) : (
                   <div>
-                    <p className="text-gray-800">{comment.content}</p>
-                    <p className="text-sm text-gray-500">
-                      By: {comment.author.username}
+                    <p className="text-gray-800 text-s ">{comment.content}</p>
+                    <p className="text-s text-gray-500">
+                      By:{" "}
+                      <span className="font-semibold">
+                        {comment.author.username}
+                      </span>
                     </p>
                     <p className="text-xs text-gray-400">
                       Created at: {new Date(comment.createdAt).toLocaleString()}
                     </p>
-                    <div className="mt-2 flex space-x-2">
-                      <button
-                        onClick={() => setEditingComment(comment.id)}
-                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-                      >
-                        Edit
-                      </button>
-                      <DeleteComment
-                        id={id}
-                        commentId={comment.id}
-                        onCommentDeleted={fetchSinglePost}
-                      />
-                    </div>
+                    <p className="text-xs text-gray-400">
+                      Last Updated at:{" "}
+                      {new Date(comment.updatedAt).toLocaleString()}
+                    </p>
+                    {comment.author.id === parseInt(userId) && (
+                      <div className="mt-2 flex space-x-2">
+                        <button
+                          onClick={() => setEditingComment(comment.id)}
+                          className="px-4 py-2 bg-stone-900 text-white rounded"
+                        >
+                          Edit
+                        </button>
+                        <DeleteComment
+                          id={id}
+                          commentId={comment.id}
+                          onCommentDeleted={fetchSinglePost}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </li>

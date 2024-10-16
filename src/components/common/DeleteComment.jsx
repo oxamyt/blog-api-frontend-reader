@@ -12,7 +12,14 @@ function DeleteComment({ id, commentId, onCommentDeleted }) {
     }
   };
 
-  return <button onClick={() => handleDeleteComment(commentId)}>X</button>;
+  return (
+    <button
+      onClick={() => handleDeleteComment(commentId)}
+      className="px-4 py-2 bg-red-500 text-white rounded-md"
+    >
+      Delete
+    </button>
+  );
 }
 
 DeleteComment.propTypes = {

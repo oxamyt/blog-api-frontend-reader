@@ -44,7 +44,7 @@ function Posts() {
         <h1 className="text-gray-600 font-bold text-4xl mb-4">
           {post.content}
         </h1>
-        <span className="text-l text-gray-500">Read More inside →</span>
+        <span className="text-l text-gray-500">Read More Inside →</span>
       </Link>
     ));
   };
