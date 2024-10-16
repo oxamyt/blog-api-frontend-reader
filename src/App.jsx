@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="container mx-auto">
+      <div className="container max-w-full flex justify-center ">
         <Outlet />
       </div>
     </div>

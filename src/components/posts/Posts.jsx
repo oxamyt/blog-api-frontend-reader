@@ -41,20 +41,24 @@ function Posts() {
         to={`/posts/${post.id}`}
         className="block bg-white shadow-lg rounded-lg p-6 mb-4 transition-transform transform hover:scale-105"
       >
-        <h1 className="text-gray-600 font-bold text-4xl mb-4">{post.title}</h1>
+        <h1 className="text-gray-600 font-bold md:text-4xl sm:text-2xl mb-4">
+          {post.title}
+        </h1>
         <span className="text-l text-gray-500">Read More Inside →</span>
       </Link>
     ));
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
+    <div className="flex flex-col min-h-screen bg-gray-50 p-4">
       {loading ? (
         <p className="text-gray-600">Loading...</p>
       ) : (
         <>
           <ErrorMessage message={error} />
-          <div className="w-full max-w-2xl">{renderPosts()}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            {renderPosts()}
+          </div>
         </>
       )}
     </div>
