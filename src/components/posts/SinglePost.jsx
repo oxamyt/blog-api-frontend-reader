@@ -39,7 +39,7 @@ function SinglePost() {
     }
 
     return (
-      <div className="md:w-6/12 w-full p-6 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-md mx-auto">
         <h2 className="text-4xl text-center font-bold mb-4">{post.title}</h2>
         <p className="text-gray-700 text-center text-xl mb-6">{post.content}</p>
 
