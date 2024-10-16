@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { postRequestLogout } from "../../utils/api";
 
 function LogoutButton() {
   const navigate = useNavigate();
@@ -7,15 +8,11 @@ function LogoutButton() {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (!confirmLogout) return;
     try {
-      const response = await fetch("http://localhost:3000/auth/logout", {
-        method: "POST",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to logout. Please try again.");
-      }
+      await postRequestLogout();
 
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("username");
       navigate("/auth/login");
     } catch (error) {
       setError(error.message);

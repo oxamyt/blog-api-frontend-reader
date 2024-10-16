@@ -32,7 +32,7 @@ function EditComment({ id, commentId, initialComment, onCommentEdited }) {
         />
         <button
           type="submit"
-          className="self-start bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+          className="self-start bg-stone-900 font-bold border-transparent border-2 text-white px-4 py-2 rounded-md hover:border-black hover:bg-stone-100 hover:text-black transition"
         >
           Update Comment
         </button>

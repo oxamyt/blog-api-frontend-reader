@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function postRequest(url, data) {
   const response = await fetch(url, {
     method: "POST",
@@ -22,7 +24,7 @@ export async function postRequest(url, data) {
 }
 
 export async function postRequestLogout() {
-  const response = await fetch("http://localhost:3000/auth/logout", {
+  const response = await fetch(`${API_URL}/auth/logout`, {
     method: "POST",
   });
   if (!response.ok) {
@@ -42,7 +44,7 @@ export async function getPostsRequest(url, token) {
 }
 
 export async function getSinglePostRequest(id, token) {
-  const response = await fetch(`http://localhost:3000/posts/${id}`, {
+  const response = await fetch(`${API_URL}/posts/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -53,7 +55,7 @@ export async function getSinglePostRequest(id, token) {
 }
 
 export async function postRequestComment(id, token, data) {
-  const response = await fetch(`http://localhost:3000/posts/${id}/comments`, {
+  const response = await fetch(`${API_URL}/posts/${id}/comments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,15 +70,12 @@ export async function postRequestComment(id, token, data) {
 }
 
 export async function deleteRequestComment(id, commentId, token) {
-  const response = await fetch(
-    `http://localhost:3000/posts/${id}/comments/${commentId}`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await fetch(`${API_URL}/posts/${id}/comments/${commentId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(
@@ -92,17 +91,14 @@ export async function deleteRequestComment(id, commentId, token) {
 }
 
 export async function putRequestComment(id, commentId, data, token) {
-  const response = await fetch(
-    `http://localhost:3000/posts/${id}/comments/${commentId}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    }
-  );
+  const response = await fetch(`${API_URL}/posts/${id}/comments/${commentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(

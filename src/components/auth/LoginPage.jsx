@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../common/FormInput";
 import ErrorMessage from "../common/ErrorMessage";
 import { postRequest } from "../../utils/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -16,10 +17,7 @@ function LoginPage() {
     const data = { username, password };
 
     try {
-      const responseData = await postRequest(
-        "http://localhost:3000/auth/login",
-        data
-      );
+      const responseData = await postRequest(`${API_URL}/auth/login`, data);
 
       setError(null);
 
@@ -27,6 +25,7 @@ function LoginPage() {
       setPassword("");
       localStorage.setItem("token", responseData.token);
       localStorage.setItem("userId", responseData.user.id);
+      localStorage.setItem("username", responseData.user.username);
       navigate("/");
     } catch (error) {
       setError(error.message);
@@ -61,7 +60,7 @@ function LoginPage() {
         />
         <button
           type="submit"
-          className="w-full bg-stone-900 font-bold text-white py-2 rounded-lg transition duration-300"
+          className="w-full text-white border-2 border-transparent bg-stone-900 font-bold  py-2 rounded-lg hover:bg-stone-100 hover:border-2 hover:border-black hover:text-black transition duration-300"
         >
           Login
         </button>
