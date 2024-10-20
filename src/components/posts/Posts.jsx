@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getPostsRequest } from "../../utils/api";
 import ErrorMessage from "../common/ErrorMessage";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Posts() {
   const [responseData, setResponseData] = useState([]);
@@ -12,10 +13,7 @@ function Posts() {
     const token = localStorage.getItem("token");
 
     try {
-      const responseData = await getPostsRequest(
-        "http://localhost:3000/posts/",
-        token
-      );
+      const responseData = await getPostsRequest(`${API_URL}/posts/`, token);
 
       setResponseData(responseData);
       setError(null);
