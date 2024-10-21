@@ -19,3 +19,4 @@ This project utilizes a variety of modern technologies to create an efficient an
 - **Dynamic Blog Posts**: Fetch and display blog posts with the ability to read individual posts.
 - **Responsive Design**: A mobile-first approach ensures the application looks great on all devices.
 - **Commenting System**: Users can add, edit, and delete comments on blog posts for interactive discussions.
+- **Live**: https://oxamyt-blog-reader.netlify.app/ .
